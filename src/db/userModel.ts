@@ -1,4 +1,5 @@
 import { User } from '@prisma/client';
+
 import { prisma } from './prisma';
 
 const hideUserFields = (user: User) => {
