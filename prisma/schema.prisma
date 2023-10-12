@@ -10,9 +10,9 @@ datasource db {
 
 model User {
   id           String  @id @default(uuid())
-  username     String
-  email        String
-  password     String
-  salt         String?
-  sessionToken String?
+  username     String  @db.Text
+  email        String  @db.Text
+  password     String  @db.Text
+  salt         String? @db.Text
+  sessionToken String? @db.Text
 }

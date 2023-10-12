@@ -3,16 +3,20 @@ import { User } from '@prisma/client';
 import { prisma } from './prisma';
 
 const hideUserFields = (user: User) => {
-  user.password = null;
-  user.salt = null;
-  user.sessionToken = null;
-  return user;
+  if (!user) {
+    return null;
+  }
+
+  return {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+  };
 };
 
 export const getUsers = async () => {
   let users = await prisma.user.findMany({});
-  users = users.map(hideUserFields);
-  return users;
+  return users.map(hideUserFields);
 };
 
 export const getUserByEmail = async (email: string) => {
@@ -22,6 +26,15 @@ export const getUserByEmail = async (email: string) => {
     },
   });
   return hideUserFields(user);
+};
+
+export const getUserByEmailWithAllFields = async (email: string) => {
+  let user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+  return user;
 };
 
 export const getUserBySessionToken = async (sessionToken: string) => {
