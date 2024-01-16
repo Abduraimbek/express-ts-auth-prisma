@@ -21,6 +21,10 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+app.use('/hello', (req, res) => {
+  res.send('bye bye');
+});
+
 app.use('/', router());
 
 const server = http.createServer(app);
